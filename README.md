@@ -86,6 +86,14 @@ This repository is ready for deployment on platforms like **Railway**, **Heroku*
 
    Railway (or other hosts) will expose `$PORT` automatically.
 
+   > **Serverless note:** the default SQLite URL points at `./neplaunch.db`,
+   > which fails on Vercel/AWS Lambda because the filesystem is read‑only. The
+   > application now automatically switches to an in‑memory database when it
+   > detects a serverless environment, but that database is ephemeral. For any
+   > real deployment you should set `DATABASE_URL` to a managed service such as
+   > PostgreSQL or MySQL. If you must use SQLite, configure it to write under
+   > `/tmp` on platforms that allow it (e.g. `sqlite:////tmp/neplaunch.db`).
+
 3. **Database**
 
    By default the app uses SQLite. For production, configure `DATABASE_URL` to
