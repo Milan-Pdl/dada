@@ -57,8 +57,12 @@ This repository is ready for deployment on platforms like **Railway**, **Heroku*
    A `Procfile` at the project root starts the FastAPI app:
 
    ```text
-   web: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+   web: sh -c "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
    ```
+
+   Using a shell wrapper ensures `$PORT` is expanded (and defaults to 8000 when
+   undefined), which prevents errors during buildpack detection or container
+   startup.
 
    Alternatively, a `Dockerfile` is included for custom container builds. The
    image installs dependencies from `backend/requirements.txt` and copies the
