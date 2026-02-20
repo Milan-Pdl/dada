@@ -27,6 +27,16 @@ app.include_router(investors.router)
 app.include_router(matching.router)
 
 
+@app.get("/")
+def read_root():
+    return {
+        "message": "Welcome to NepLaunch API",
+        "docs": "/docs",
+        "redoc": "/redoc",
+        "health": "/api/health"
+    }
+
+
 @app.get("/api/health")
 def health():
     return {"status": "ok", "platform": "NepLaunch"}
