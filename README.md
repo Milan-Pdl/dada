@@ -104,3 +104,19 @@ Once the service is running, verify with `GET /api/health` returning `{ "status"
 Feel free to consult the [Quick Start](#quick-start) section for local
 development.
 
+### Vercel-specific notes
+
+Deploying as a serverless function on Vercel can be tricky because the backend
+lives under `backend/app`. We include a minimal wrapper and configuration to
+make it work:
+
+* `api/index.py` adds `backend` to `sys.path` and imports the FastAPI `app`.
+* `vercel.json` forces the Python runtime and routes all requests to the
+  function.
+
+If your function continues to crash (FUNCTION_INVOCATION_FAILED), the usual
+culprits are missing path adjustments or hitting execution time/memory limits.
+In many cases it’s easier to deploy the whole project as a container (see the
+Dockerfile) or use another host such as Railway/Heroku instead.
+
+
