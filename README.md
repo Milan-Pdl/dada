@@ -62,7 +62,12 @@ This repository is ready for deployment on platforms like **Railway**, **Heroku*
 
    Alternatively, a `Dockerfile` is included for custom container builds. The
    image installs dependencies from `backend/requirements.txt` and copies the
-   backend code under `/app/backend`.
+   backend code under `/app/backend`. The container command uses a shell so the
+   `$PORT` environment variable is correctly expanded at runtime:
+
+   ```dockerfile
+   CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $PORT"]
+   ```
 
 
 2. **Environment variables**

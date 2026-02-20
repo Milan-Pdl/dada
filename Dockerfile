@@ -17,5 +17,5 @@ ENV PYTHONPATH=/app/backend
 # Expose port (Railway sets $PORT at runtime)
 EXPOSE 8000
 
-# Default command
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "$PORT"]
+# Default command (use shell form so $PORT expands)
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $PORT"]
