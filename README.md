@@ -60,6 +60,11 @@ This repository is ready for deployment on platforms like **Railway**, **Heroku*
    web: uvicorn app.main:app --host 0.0.0.0 --port $PORT
    ```
 
+   Alternatively, a `Dockerfile` is included for custom container builds. The
+   image installs dependencies from `backend/requirements.txt` and copies the
+   backend code under `/app/backend`.
+
+
 2. **Environment variables**
 
    Copy `.env.example` to `.env` (or set values in your provider):
