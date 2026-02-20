@@ -45,3 +45,48 @@ Set `OPENAI_API_KEY` in `backend/.env` to enable:
 - Team Gap Analysis
 
 Without the key, the platform uses skill-overlap matching and mock AI responses.
+
+---
+
+## Deployment
+
+This repository is ready for deployment on platforms like **Railway**, **Heroku**, or any Python-compatible host.
+
+1. **Procfile**
+
+   A `Procfile` at the project root starts the FastAPI app:
+
+   ```text
+   web: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+   ```
+
+2. **Environment variables**
+
+   Copy `.env.example` to `.env` (or set values in your provider):
+   ```text
+   DATABASE_URL=<your database url>
+   SECRET_KEY=<random secret>
+   OPENAI_API_KEY=<optional for AI features>
+   ACCESS_TOKEN_EXPIRE_MINUTES=1440
+   ```
+
+   Railway (or other hosts) will expose `$PORT` automatically.
+
+3. **Database**
+
+   By default the app uses SQLite. For production, configure `DATABASE_URL` to
+   a hosted Postgres/MySQL instance and run Alembic migrations:
+   ```bash
+   alembic upgrade head
+   ```
+
+4. **Frontend**
+
+   Build the Vite/React app separately and serve it from a static host or
+   integrate with the backend using a reverse proxy.
+
+Once the service is running, verify with `GET /api/health` returning `{ "status": "ok" }`.
+
+Feel free to consult the [Quick Start](#quick-start) section for local
+development.
+
